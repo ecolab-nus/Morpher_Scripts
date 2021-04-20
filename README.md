@@ -19,16 +19,22 @@
  2) Use python3 virtual environment to run the script
  https://linoxide.com/linux-how-to/setup-python-virtual-environment-ubuntu/
 
- 3) python3 -m venv morpher_env
+ first time: python3 -m venv morpher_env
+ next: source morpher_env/bin/activate
 
- 4) Set MORPHER_HOME directory as an environment variable (Ex: export MORPHER_HOME=/home/dmd/Workplace/Morphor/github_ecolab_repos)
+ 3) Set MORPHER_HOME directory as an environment variable (Ex: export MORPHER_HOME=/home/dmd/Workplace/Morphor/github_ecolab_repos)
 
- 5) python run_morpher.py
- 
- Currently, this script contains the pedometer application kernel. 
+ 4) python run_morpher.py
+
+run_morpher.py contains the pedometer application kernel. 
  
  Final Output should be: 
 	Matches ::557, Mismatches::20 
-	
+ TODO:Automate memory allocation copy from mem_alloc.txt to mem.json
+
+run_morpher_array_add.py
+ 
+ Final Output should be:
+        Matches :: 241, Mismatches::0
  Make sure to run this before making any major change to the repos
 

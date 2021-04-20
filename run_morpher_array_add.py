@@ -23,9 +23,9 @@ def main():
   MAPPER_HOME = MORPHER_HOME + '/Morpher_CGRA_Mapper'
   SIMULATOR_HOME = MORPHER_HOME + '/hycube_simulator'
 
-  DFG_GEN_KERNEL = DFG_GEN_HOME + '/applications/pedometer/'
-  MAPPER_KERNEL = MAPPER_HOME + '/applications/pedometer/'
-  SIMULATOR_KERNEL =SIMULATOR_HOME + '/applications/pedometer/'
+  DFG_GEN_KERNEL = DFG_GEN_HOME + '/applications/array_add/'
+  MAPPER_KERNEL = MAPPER_HOME + '/applications/hycube/array_add/'
+  SIMULATOR_KERNEL =SIMULATOR_HOME + '/applications/array_add/'
 
   my_mkdir(DFG_GEN_KERNEL)
   my_mkdir(MAPPER_KERNEL)
@@ -38,8 +38,8 @@ def main():
   os.chdir(DFG_GEN_KERNEL)
 
   print('\nGenerating DFG\n')
-  os.system('./run_pass.sh pedometer')
-  os.system('dot -Tpdf pedometer_INNERMOST_LN1_PartPredDFG.dot -o pedometer_INNERMOST_LN1_PartPredDFG.pdf')
+  os.system('./run_pass.sh array_add')
+  os.system('dot -Tpdf array_add_INNERMOST_LN1_PartPred_DFG.dot -o array_add_INNERMOST_LN1_PartPred_DFG.pdf')
 
   MEM_TRACE = DFG_GEN_KERNEL + '/memtraces'
 
@@ -47,26 +47,26 @@ def main():
 
   print('\nGenerating Data Memory Content\n')
   os.system('./final')
-  os.system('cp memtraces/loop_pedometer_INNERMOST_LN1_0.txt '+SIMULATOR_KERNEL)
-  os.system('cp pedometer_INNERMOST_LN1_mem_alloc.txt '+SIMULATOR_KERNEL)
-  os.system('cp pedometer_INNERMOST_LN1_PartPredDFG.xml '+ MAPPER_KERNEL)
+  os.system('cp memtraces/loop_array_add_INNERMOST_LN1_0.txt '+SIMULATOR_KERNEL)
+  os.system('cp array_add_INNERMOST_LN1_mem_alloc.txt '+SIMULATOR_KERNEL)
+  os.system('cp array_add_INNERMOST_LN1_PartPred_DFG.xml '+ MAPPER_KERNEL)
 
 ##############################################################################################################################################
   print('\nRunning Morpher_CGRA_Mapper\n')
   os.chdir(MAPPER_KERNEL)
 
-  os.system('../../build/CGRA_xml_compiler -d pedometer_INNERMOST_LN1_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -t HyCUBE_4REG')
+  os.system('../../../build/CGRA_xml_compiler -d array_add_INNERMOST_LN1_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -t HyCUBE_4REG')
   os.system('cp *.bin '+ SIMULATOR_KERNEL)
 
 ##############################################################################################################################################
   print('\nRunning hycube_simulator\n')
   os.chdir(SIMULATOR_KERNEL)
 
-  os.system('../../src/build/hycube_simulator *.bin loop_pedometer_INNERMOST_LN1_0.txt pedometer_INNERMOST_LN1_mem_alloc.txt')
+  os.system('../../src/build/hycube_simulator *.bin loop_array_add_INNERMOST_LN1_0.txt array_add_INNERMOST_LN1_mem_alloc.txt')
 
 def my_mkdir(dir):
     try:
-        os.mkdirs(dir)
+        os.mkdirs(dir, exist_ok=True)  
     except:
         pass
 
