@@ -23,9 +23,9 @@ def main():
   MAPPER_HOME = MORPHER_HOME + '/Morpher_CGRA_Mapper'
   SIMULATOR_HOME = MORPHER_HOME + '/hycube_simulator'
 
-  DFG_GEN_KERNEL = DFG_GEN_HOME + '/applications/array_add/'
-  MAPPER_KERNEL = MAPPER_HOME + '/applications/hycube/array_add/'
-  SIMULATOR_KERNEL =SIMULATOR_HOME + '/applications/array_add/'
+  DFG_GEN_KERNEL = DFG_GEN_HOME + '/applications/hycube_v3_design_app_test/gemm/gemm_unroll_block_size_2/'
+  MAPPER_KERNEL = MAPPER_HOME + '/applications/hycube/gemm_2x2x2/'
+  SIMULATOR_KERNEL =SIMULATOR_HOME + '/applications/gemm_2x2x2/'
 
   my_mkdir(DFG_GEN_KERNEL)
   my_mkdir(MAPPER_KERNEL)
@@ -38,8 +38,8 @@ def main():
   os.chdir(DFG_GEN_KERNEL)
 
   print('\nGenerating DFG\n')
-  os.system('./run_pass.sh array_add')
-  os.system('dot -Tpdf array_add_INNERMOST_LN1_PartPredDFG.dot -o array_add_INNERMOST_LN1_PartPredDFG.pdf')
+  os.system('./run_pass.sh gemm')
+  os.system('dot -Tpdf gemm_INNERMOST_LN111_PartPredDFG.dot -o gemm_INNERMOST_LN111_PartPredDFG.pdf')
 
   MEM_TRACE = DFG_GEN_KERNEL + '/memtraces'
 
@@ -47,17 +47,17 @@ def main():
 
   print('\nGenerating Data Memory Content\n')
   os.system('./final')
-  os.system('cp memtraces/loop_array_add_INNERMOST_LN1_0.txt '+SIMULATOR_KERNEL)
-  os.system('cp array_add_INNERMOST_LN1_mem_alloc.txt '+SIMULATOR_KERNEL)
-  os.system('cp array_add_INNERMOST_LN1_PartPred_DFG.xml '+ MAPPER_KERNEL)
+  os.system('cp memtraces/loop_gemm_INNERMOST_LN111_0.txt '+SIMULATOR_KERNEL)
+  os.system('cp gemm_INNERMOST_LN111_mem_alloc.txt '+SIMULATOR_KERNEL)
+  os.system('cp gemm_INNERMOST_LN111_PartPred_DFG.xml '+ MAPPER_KERNEL)
 
 ##############################################################################################################################################
   print('\nRunning Morpher_CGRA_Mapper\n')
   os.chdir(MAPPER_KERNEL)
 
-  os.system('rm *.bin')  
-  os.system('../../../build/src/cgra_xml_mapper -d array_add_INNERMOST_LN1_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -t HyCUBE_4REG')
-
+  os.system('rm *.bin') 
+  os.system('../../../build/src/cgra_xml_mapper -d gemm_INNERMOST_LN111_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -i 12 -t HyCUBE_4REG')
+  
   os.chdir(SIMULATOR_KERNEL)
   os.system('rm *.bin')  
 
@@ -68,11 +68,11 @@ def main():
   print('\nRunning hycube_simulator\n')
   os.chdir(SIMULATOR_KERNEL)
 
-  os.system('../../src/build/hycube_simulator *.bin loop_array_add_INNERMOST_LN1_0.txt array_add_INNERMOST_LN1_mem_alloc.txt')
+  os.system('../../src/build/hycube_simulator *.bin loop_gemm_INNERMOST_LN111_0.txt gemm_INNERMOST_LN111_mem_alloc.txt')
 
 def my_mkdir(dir):
     try:
-        os.mkdirs(dir, exist_ok=True)  
+        os.makedirs(dir)  
     except:
         pass
 

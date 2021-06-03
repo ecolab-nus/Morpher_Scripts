@@ -24,7 +24,7 @@
 
  3) Set MORPHER_HOME directory as an environment variable (Ex: export MORPHER_HOME=/home/dmd/Workplace/Morphor/github_ecolab_repos)
 
- 4) python run_morpher.py
+ 4) python run_morpher_<kernel>.py   
 
 run_morpher.py contains the pedometer application kernel. 
  
@@ -37,4 +37,10 @@ run_morpher_array_add.py
  Final Output should be:
         Matches :: 241, Mismatches::0
  Make sure to run this before making any major change to the repos
+
+
+ There is one manual work which the script currently doesn't handle.
+ Morpher mapper need data layout as input and it is taken in architecture.json.
+ DFG generator generates the layout but does not copy it to architecture.json.
+ Therefore you have to first run DFG generator and copy the data layout to architecture.json file manually before running mapper.
 
