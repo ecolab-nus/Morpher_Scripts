@@ -72,7 +72,7 @@ def main():
 
 def my_mkdir(dir):
     try:
-        os.mkdirs(dir, exist_ok=True)  
+        os.makedirs(dir) 
     except:
         pass
 
