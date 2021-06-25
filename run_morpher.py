@@ -49,12 +49,16 @@ def main():
   os.system('./final')
   os.system('cp memtraces/loop_pedometer_INNERMOST_LN1_0.txt '+SIMULATOR_KERNEL)
   os.system('cp pedometer_INNERMOST_LN1_mem_alloc.txt '+SIMULATOR_KERNEL)
+  os.system('cp pedometer_INNERMOST_LN1_mem_alloc.txt '+MAPPER_KERNEL)
   os.system('cp pedometer_INNERMOST_LN1_PartPred_DFG.xml '+ MAPPER_KERNEL)
 
 ##############################################################################################################################################
   print('\nRunning Morpher_CGRA_Mapper\n')
   os.chdir(MAPPER_KERNEL)
 
+
+  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original.json pedometer_INNERMOST_LN1_mem_alloc.txt 2048 2 hycube_original_mem.json')
+  print('\nupdate memory allocation done!\n')
   os.system('../../build/src/cgra_xml_mapper -d pedometer_INNERMOST_LN1_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -t HyCUBE_4REG')
   os.system('cp *.bin '+ SIMULATOR_KERNEL)
 
