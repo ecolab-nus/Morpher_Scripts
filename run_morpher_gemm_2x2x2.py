@@ -49,6 +49,7 @@ def main():
   os.system('./final')
   os.system('cp memtraces/loop_gemm_INNERMOST_LN111_0.txt '+SIMULATOR_KERNEL)
   os.system('cp gemm_INNERMOST_LN111_mem_alloc.txt '+SIMULATOR_KERNEL)
+  os.system('cp gemm_INNERMOST_LN111_mem_alloc.txt '+MAPPER_KERNEL)
   os.system('cp gemm_INNERMOST_LN111_PartPred_DFG.xml '+ MAPPER_KERNEL)
 
 ##############################################################################################################################################
@@ -56,6 +57,8 @@ def main():
   os.chdir(MAPPER_KERNEL)
 
   os.system('rm *.bin') 
+  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original.json gemm_INNERMOST_LN111_mem_alloc.txt 2048 2 hycube_original_mem.json')
+  print('\nupdate memory allocation done!\n')
   os.system('../../../build/src/cgra_xml_mapper -d gemm_INNERMOST_LN111_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -i 12 -t HyCUBE_4REG')
   
   os.chdir(SIMULATOR_KERNEL)
