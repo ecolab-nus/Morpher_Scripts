@@ -58,7 +58,7 @@ def main():
 
 
   os.system('rm *.bin')
-  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original.json encrypt_INNERMOST_LN1_mem_alloc.txt 2048 2 hycube_original_mem.json')
+  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original_updatemem.json encrypt_INNERMOST_LN1_mem_alloc.txt 2048 2 hycube_original_mem.json')
   print('\nupdate memory allocation done!\n')
   os.system('../../../build/src/cgra_xml_mapper -d encrypt_INNERMOST_LN1_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -i 21 -t HyCUBE_4REG')
 
