@@ -61,8 +61,8 @@ def main():
 
   os.system('rm *.bin') 
   os.system('mkdir binary')
-  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original.json gemm_INNERMOST_LN111_mem_alloc.txt 2048 2 hycube_original_mem.json')
-  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original_RC.json gemm_INNERMOST_LN111_mem_alloc.txt 2048 2 hycube_original_mem_RC.json')
+  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original_updatemem.json gemm_INNERMOST_LN111_mem_alloc.txt 8192 2 hycube_original_mem.json')
+  os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original_updatemem_RC.json gemm_INNERMOST_LN111_mem_alloc.txt 8192 2 hycube_original_mem_RC.json')
   print('\nupdate memory allocation done!\n')
   os.system('../../../build/src/cgra_xml_mapper -d gemm_INNERMOST_LN111_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -i 12 -t HyCUBE_4REG > map_left.log')
   os.system('mv *.bin binary/left.bin')
