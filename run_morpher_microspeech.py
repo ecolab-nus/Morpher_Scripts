@@ -71,7 +71,7 @@ def main():
   print('\nRunning hycube_simulator\n')
   os.chdir(SIMULATOR_KERNEL)
 
-  os.system('../../src/build/hycube_simulator *.bin loop_microspeech_conv_layer_hycube_INNERMOST_LN13_0.txt microspeech_conv_layer_hycube_INNERMOST_LN13_mem_alloc.txt 16384')
+  os.system('../../src/build/hycube_simulator *.bin loop_microspeech_conv_layer_hycube_INNERMOST_LN13_0.txt microspeech_conv_layer_hycube_INNERMOST_LN13_mem_alloc.txt 32768')
 
 def my_mkdir(dir):
     try:
