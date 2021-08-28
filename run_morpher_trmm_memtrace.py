@@ -35,7 +35,12 @@ def main():
         os.system(command+"|tail -n 2 |head -n 1 > output.log")
         with open("output.log", 'r') as f:
             line = f.readline()
-            if not re.search("Mismatches::0", line):
+            success = False
+            while line:
+                if re.search("Mismatches::0", line):
+                  success = True
+                line = f.readline()
+            if not success:
                 print("ERROR: FAIL AT MEMTRACE "+ file)
     print("Done!")
 
