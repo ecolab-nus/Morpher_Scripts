@@ -31,7 +31,7 @@ def main():
     samplefiles = np.random.choice(files, size=10000, replace=False)
     for file in tqdm(samplefiles):
         os.system('cp '+join(DFG_MEMTRACE, file)+' '+SIMULATOR_KERNEL)
-        command = SIMULATOR_HOME+'/src/build/hycube_simulator '+SIMULATOR_KERNEL+'*.bin '+join(DFG_MEMTRACE, file)+' '+SIMULATOR_KERNEL+'trmm_INNERMOST_LN111_mem_alloc.txt'
+        command = SIMULATOR_HOME+'/src/build/hycube_simulator -c'+SIMULATOR_KERNEL+'*.bin -d'+join(DFG_MEMTRACE, file)+' -a '+SIMULATOR_KERNEL+'trmm_INNERMOST_LN111_mem_alloc.txt'
         os.system(command+"|tail -n 2 |head -n 1 > output.log")
         with open("output.log", 'r') as f:
             line = f.readline()

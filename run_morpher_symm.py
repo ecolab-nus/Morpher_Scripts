@@ -38,7 +38,7 @@ def main():
   os.chdir(DFG_GEN_KERNEL)
 
   print('\nGenerating DFG\n')
-  os.system('./run_pass.sh kernel_symm')
+  os.system('./run_pass.sh kernel_symm 2 2048')
   os.system('dot -Tpdf kernel_symm_INNERMOST_LN111_PartPred_DFG.xml -o kernel_symm_INNERMOST_LN111_PartPred_DFG.pdf')
 
   MEM_TRACE = DFG_GEN_KERNEL + '/memtraces'
@@ -79,7 +79,7 @@ def main():
   
   for invocations in range(0,num_memory_traces) :
     data_file = 'memtraces/loop_kernel_symm_INNERMOST_LN111_' + str(invocations) + '.txt'
-    os.system('../../src/build/hycube_simulator *.bin '+data_file+ ' mem_alloc.txt 4096')
+    os.system('../../src/build/hycube_simulator -c *.bin -d '+data_file+ ' -a mem_alloc.txt')
 
 def my_mkdir(dir):
     try:

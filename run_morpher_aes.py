@@ -72,7 +72,7 @@ def main():
   print('\nRunning hycube_simulator\n')
   os.chdir(SIMULATOR_KERNEL)
 
-  os.system('../../src/build/hycube_simulator *.bin loop_encrypt_INNERMOST_LN1_0.txt encrypt_INNERMOST_LN1_mem_alloc.txt')
+  os.system('../../src/build/hycube_simulator -c *.bin -d loop_encrypt_INNERMOST_LN1_0.txt -a encrypt_INNERMOST_LN1_mem_alloc.txt')
 
 def my_mkdir(dir):
     try:

@@ -38,7 +38,7 @@ def main():
   os.chdir(DFG_GEN_KERNEL)
 
   print('\nGenerating DFG\n')
-  os.system('./run_pass.sh array_add')
+  os.system('./run_pass.sh array_add 2 2048')
   os.system('dot -Tpdf array_add_INNERMOST_LN1_PartPredDFG.dot -o array_add_INNERMOST_LN1_PartPredDFG.pdf')
 
   MEM_TRACE = DFG_GEN_KERNEL + '/memtraces'
@@ -71,7 +71,7 @@ def main():
   print('\nRunning hycube_simulator\n')
   os.chdir(SIMULATOR_KERNEL)
 
-  os.system('../../src/build/hycube_simulator *.bin loop_array_add_INNERMOST_LN1_0.txt array_add_INNERMOST_LN1_mem_alloc.txt')
+  os.system('../../src/build/hycube_simulator -c *.bin -d loop_array_add_INNERMOST_LN1_0.txt -a array_add_INNERMOST_LN1_mem_alloc.txt')
 
 def my_mkdir(dir):
     try:
