@@ -25,7 +25,7 @@ def main():
   MORPHER_HOME = os.getenv('MORPHER_HOME')
   DFG_GEN_HOME = MORPHER_HOME + '/Morpher_DFG_Generator'
   MAPPER_HOME = MORPHER_HOME + '/Morpher_CGRA_Mapper'
-  SIMULATOR_HOME = MORPHER_HOME + '/sim/hycube_simulator'
+  SIMULATOR_HOME = MORPHER_HOME + '/hycube_simulator'
 
   DFG_GEN_KERNEL = DFG_GEN_HOME + '/applications/hycube_v3_design_app_test/Microspeech16/'
   MAPPER_KERNEL = MAPPER_HOME + '/applications/hycube8x8//Microspeech16/'
@@ -50,9 +50,9 @@ def main():
   my_mkdir(MEM_TRACE)
 
   print('\nGenerating Data Memory Content\n')
-  os.system('./final')
+  #os.system('./final')
   list = os.listdir(MEM_TRACE)
-  num_memory_traces = 1#len(list)
+  num_memory_traces = len(list)
 
  # os.system('cp memtraces/loop_microspeech_conv_layer_hycube_INNERMOST_LN13_0.txt '+SIMULATOR_KERNEL)
   os.system('cp -r memtraces/ '+SIMULATOR_KERNEL)
@@ -70,15 +70,15 @@ def main():
   os.system('python ../../../update_mem_alloc.py ../../../json_arch/hycube_original_updatemem_RC.json microspeech_conv_layer_hycube_INNERMOST_LN13_mem_alloc.txt 8192 2 hycube_original_mem_RC.json')
   print('\nupdate memory allocation done!\n')
 
-  os.system('../../../build/src/cgra_xml_mapper -d microspeech_conv_layer_hycube_INNERMOST_LN13_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -i 12 -t HyCUBE_4REG')
+  os.system('../../../build/src/cgra_xml_mapper -d microspeech_conv_layer_hycube_INNERMOST_LN13_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem.json -i 10 -t HyCUBE_4REG')
   os.system('mv *.bin binary/left.bin')
-  os.system('../../../build/src/cgra_xml_mapper -d microspeech_conv_layer_hycube_INNERMOST_LN13_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem_RC.json -i 12 -t HyCUBE_4REG')
+  os.system('../../../build/src/cgra_xml_mapper -d microspeech_conv_layer_hycube_INNERMOST_LN13_PartPred_DFG.xml -x 4 -y 4 -j hycube_original_mem_RC.json -i 10 -t HyCUBE_4REG')
   os.system('mv *.bin binary/right.bin')
   os.chdir(SIMULATOR_KERNEL)
   os.system('rm *.bin')  
 
   os.chdir(MAPPER_KERNEL)
-  os.system('cp *.bin '+ SIMULATOR_KERNEL)
+  os.system('cp binary/*.bin '+ SIMULATOR_KERNEL)
 
 ##############################################################################################################################################
   print('\nRunning hycube_simulator\n')
